@@ -1,6 +1,6 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
-
+# Custom permission class to handle authentication for APIs
 class IsAuthenticatedOrPostOnly(BasePermission):
     def has_permission(self, request, view):
         if request.method == 'POST':

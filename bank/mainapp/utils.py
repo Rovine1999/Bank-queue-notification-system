@@ -1,6 +1,7 @@
 from django.core.mail import send_mail
 
 
+# Function to send email notifications to the customers on the queue
 def send_notification(email, message):
     try:
         send_mail(

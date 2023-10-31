@@ -15,7 +15,7 @@ from rest_framework.views import APIView
 
 from .utils import send_notification
 
-
+#Custom login view for the API
 class CustomLogin(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):
@@ -30,13 +30,14 @@ class CustomLogin(ObtainAuthToken):
             'user': UserSerializer(user).data
         })
 
-
+#Custom logout view for the API
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('id')
     authentication_classes = [AUTH_CLASS]
     permission_classes = [IsAuthenticatedOrPostOnly]
     serializer_class = UserSerializer
     filter_backends = [filters.OrderingFilter]
+
 
 
 class BranchViewSet(viewsets.ModelViewSet):
@@ -75,7 +76,7 @@ class QueueViewSet(viewsets.ModelViewSet):
     ordering_fields = '__all__'
     filterset_fields = []
 
-
+#Custom API view to get the current customer on the queue
 class PickCustomerView(APIView):
     permission_classes = [permissions.DjangoModelPermissions]
     authentication_classes = [AUTH_CLASS]
@@ -114,16 +115,18 @@ class PickCustomerView(APIView):
             assignment.save()
             next_queue.state = '1'
             next_queue.save()
+            
             # Send email notification (This can be changed to send an sms notification)
             customer_email = next_queue.customer.user.email
             message = f"Hello {customer_email}, you are next in the service. Visit teller No. {employee_id} ({employee_name})"
             send_notification(customer_email, message)
 
+#Custom API view to get the next customer on the queue
             return Response({'message': f"Queue {next_queue.id} assigned to Employee {employee_id}"})
         else:
             return Response({'message': 'No queues available'})
 
-
+#Custom API view to finish serving a customer
 class FinishServingView(APIView):
     permission_classes = [permissions.DjangoModelPermissions]
     authentication_classes = [AUTH_CLASS]

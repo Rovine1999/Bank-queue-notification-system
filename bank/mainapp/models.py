@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
+#TimeStamp model to add created_at and updated_at fields to all models
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -10,17 +10,17 @@ class TimeStampedModel(models.Model):
         ordering = ['-id']
         abstract = True
 
-
+#Branch model
 class Branch(TimeStampedModel):
     name = models.CharField(blank=False, null=False, max_length=100)
 
-
+#model(table) for employee
 class Employee(TimeStampedModel):
     user = models.OneToOneField(User, blank=False, null=False, on_delete=models.CASCADE)
     branch = models.ForeignKey(Branch, blank=False, null=True, on_delete=models.SET_NULL)
     employee_no = models.CharField(max_length=50, blank=True, null=True)
 
-
+#model(table) for customer
 class Customer(TimeStampedModel):
     user = models.OneToOneField(User, blank=False, null=False, on_delete=models.CASCADE)
     branch = models.ForeignKey(Branch, blank=False, null=True, on_delete=models.SET_NULL)

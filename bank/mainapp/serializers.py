@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password
 from .models import Branch, Employee, Customer, Queue
 from drf_writable_nested import WritableNestedModelSerializer
 
-
+# Serializers to define the API representation.
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
