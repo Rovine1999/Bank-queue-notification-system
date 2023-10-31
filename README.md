@@ -44,6 +44,7 @@ for a customer in queue that is `0` for `NEW`, `1` for `IN_SERVICE` and `2` for 
 
 14. You are all set, test out the entire collection **top down**
 
+Postman documentation [here](https://documenter.getpostman.com/view/14081802/2s9YXbA5tH)
 
 Create a super user, login in to admin dashboard and create `2 groups`
 ## Group 1 - `employee` group
