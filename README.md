@@ -11,9 +11,39 @@ and be available for the next customer.
 A teller can only take a customer in queue only if the previous customer is not in queue as `NEW`. There are three stages
 for a customer in queue that is `0` for `NEW`, `1` for `IN_SERVICE` and `2` for `DONE`.
 
-## Setup
+## Set up
 
-To setup, unzip the file and create.
+
+1. Create a working folder
+2. Open the folder in terminal/cmd
+3. Download the zip file into the folder or run git clone `https://github.com/Rovine1999/Bank-queue-notification-system` 
+4. Then run `cd Bank-queue-notification-system`
+5. Create a virtual environment
+
+    - In windows run `python -m virtualenv venv`
+
+    - In Linux run `python3 -m virtualenv venv`
+
+    N/B: You need to have `virtualenv` installed. To install it run `pip install virtualenv`
+
+6. Activate your environment
+
+    - In windows run `source ./venv/Scripts/activate`
+
+    - In linux run `source ./venv/bin/activate`
+
+7. Install requirements using `pip install -r requirements.txt`
+8. Navigate to `bank` folder using `cd bank`
+9. Make migrations and migrate if you don't have `db.sqlite3` file in your folder tree using `python manage.py makemigrations && python manage.py migrate`
+10. Run the server `python manage.py runserver`
+11. Open `Postman`
+12. Import the `postman collection` in the working folder called `Banking system.postman_collection.json`.
+13. Create an environment in postman if one is not created for you and add: 
+    - `base_url`: `http://localhost:8000`
+    - `token`: `<Update this after using the login endpoint under users module>`
+
+14. You are all set, test out the entire collection **top down**
+
 
 Create a super user, login in to admin dashboard and create `2 groups`
 ## Group 1 - `employee` group
