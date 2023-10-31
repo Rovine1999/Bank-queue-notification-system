@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "15b30283-120b-45ef-bf8f-71769144e5ce",
+		"_postman_id": "558ab35f-9a78-4f80-94d0-042b61bb9a08",
 		"name": "Banking system",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "14081802"
+		"_exporter_id": "15444678"
 	},
 	"item": [
 		{
@@ -44,7 +44,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"sydney\",\n    \"password\": \"sydney123\"\n}",
+							"raw": "{\n    \"username\": \"new_sydney\",\n    \"password\": \"sydney123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -110,13 +110,16 @@
 			"name": "Employees",
 			"item": [
 				{
-					"name": "Create Employee",
+					"name": "Employee Registration",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": 2,\n    \"employee_no\": \"EX_0002\"\n}",
+							"raw": "{\n    \"user\": {\n        \"first_name\": \"Sydney\",\n        \"last_name\": \"Sygel\",\n        \"email\": \"sydney@gmail.com\",\n        \"username\": \"new_sydney\",\n        \"password\": \"sydney123\"\n    },\n    \"employee_no\": \"ESX_001\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -143,7 +146,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": 1,\n    \"employee_no\": \"EX_0001-UPDATED\"\n}",
+							"raw": "{\n    \"branch\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -389,13 +392,117 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/branch/1",
+							"raw": "{{base_url}}/branches/1",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"branch",
+								"branches",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Queues",
+			"item": [
+				{
+					"name": "Join Queue",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer\": 1,\n    \"branch\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/queues/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"queues",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pick next Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"branch\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/pick-customer/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pick-customer",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Finish Serving a customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/finish-serving/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"finish-serving",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Queues",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/queues/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"queues",
+								""
 							]
 						}
 					},

@@ -34,12 +34,13 @@ class Queue(TimeStampedModel):
     )
     customer = models.ForeignKey(Customer, blank=False, null=True, on_delete=models.SET_NULL)
     branch = models.ForeignKey(Branch, blank=False, null=True, on_delete=models.SET_NULL)
-    state = models.CharField(default='new', choices=STATE_CHOICES, max_length=4)
+    state = models.CharField(default='0', choices=STATE_CHOICES, max_length=4)
     employee = models.ForeignKey(Employee, blank=True, null=True, on_delete=models.SET_NULL)
 
-class Transaction(TimeStampedModel):
-    queue = models.ForeignKey(Queue, blank=False, null=False, on_delete=models.CASCADE)
-    
 
-class Notification(TimeStampedModel):
-    customer = models.ForeignKey(Customer, blank=True, null=True, on_delete=models.SET_NULL)
+class EmployeeQueueAssignment(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)
+    queue = models.ForeignKey(Queue, on_delete=models.CASCADE, null=True)
+    start_time = models.DateTimeField(null=True, blank=True)
+    end_time = models.DateTimeField(null=True, blank=True)
+    serving = models.BooleanField(default=False)

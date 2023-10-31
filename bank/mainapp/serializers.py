@@ -2,12 +2,11 @@ from django.contrib.auth.models import User
 from django.forms import ValidationError
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
-from .models import Branch, Employee, Customer, Queue, Transaction, Notification
+from .models import Branch, Employee, Customer, Queue
 from drf_writable_nested import WritableNestedModelSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
         fields = '__all__'
@@ -25,14 +24,14 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class BranchSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Branch
         fields = '__all__'
 
 
 class EmployeeSerializer(WritableNestedModelSerializer):
-    user = UserSerializer(required=True)
+    user = UserSerializer(required=False)
+
     class Meta:
         model = Employee
         fields = '__all__'
@@ -40,28 +39,13 @@ class EmployeeSerializer(WritableNestedModelSerializer):
 
 class CustomerSerializer(WritableNestedModelSerializer):
     user = UserSerializer(required=True)
+
     class Meta:
         model = Customer
         fields = '__all__'
 
 
 class QueueSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Queue
         fields = '__all__'
-
-
-class TransactionSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Transaction
-        fields = '__all__'
-
-
-class NotificationSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Notification
-        fields = '__all__'
-
