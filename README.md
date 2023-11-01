@@ -132,3 +132,116 @@ This allows to identify between tellers (Employees) and customers. Customers hav
 permissions only in which they can add and view a queue but can't update nor delete.
 
 Tellers have the ability to manage customers and also manage queues.
+
+
+### Deployment to AWS EC2 instance.
+
+1. Launch an EC2 Instance:
+    - Log in to your AWS account and navigate to the EC2 dashboard.
+    - Click "Launch Instance" to create a new EC2 instance. Choose an Amazon Machine Image (AMI) that suits your needs (e.g.,    Amazon Linux, Ubuntu).
+    - Configure instance details, add storage, and set up security groups to allow incoming traffic on ports 22 (SSH) and 80 (HTTP).
+
+2. Connect to your EC2 Instance:
+    - Use SSH to connect to your EC2 instance. You can find the public IP address or DNS of your instance on the EC2 dashboard.
+    - Use a command like this to connect: `ssh -i your-key-pair.pem` `admin@51.20.75.48`-(using your ec2 instance public ip)
+
+3. Update and Upgrade the Packages:
+    - Install and upgrade all the installed packages.
+    - `sudo yum update -y`  # For Amazon Linux
+    - `sudo apt update && sudo apt upgrade -y`  # For Ubuntu
+
+4. Install Required Software:
+    - Docker and docker-compose.
+    - sudo apt install apt-transport-https ca-certificates curl software-properties-common
+    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+    - sudo apt install docker-ce
+    - sudo service docker start.
+    
+
+5. Clone/Upload Your Django Project:
+    - Use git or any method you prefer to clone your Django project onto the EC2 instance.
+
+6. Create a compose file as follows:
+    ### Deployment to AWS EC2 instance.
+
+1. Launch an EC2 Instance:
+    - Log in to your AWS account and navigate to the EC2 dashboard.
+    - Click "Launch Instance" to create a new EC2 instance. Choose an Amazon Machine Image (AMI) that suits your needs (e.g.,    Amazon Linux, Ubuntu).
+    - Configure instance details, add storage, and set up security groups to allow incoming traffic on ports 22 (SSH) and 80 (HTTP).
+
+2. Connect to your EC2 Instance:
+    - Use SSH-client to connect to your EC2 instance. You can find the public IP address or DNS of your instance on the EC2 dashboard.
+    - Use a command like this to connect: `ssh -i your-key-pair.pem` `admin@51.20.75.48`-(using your ec2 instance public ip)
+
+3. Update and Upgrade the Packages:
+    - Install and upgrade all the installed packages.
+    - `sudo yum update -y`  # For Amazon Linux
+    - `sudo apt update && sudo apt upgrade -y`  # For Ubuntu
+4. Install Required Software:
+    - docker and docker-compose.
+    - sudo apt install apt-transport-https ca-certificates curl software-properties-common
+   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+   - sudo apt install docker-ce
+   - sudo service docker start.
+5. Clone/Upload Your Django Project:
+    - Use git or any method you prefer to clone your Django project onto the EC2 instance.
+
+6. Create a compose file as follows:
+
+        `version: '3.9'
+
+        services:
+        db:
+        image: postgres:latest
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: 8H3S;k}E*H?m
+            POSTGRES_USER: postgres
+            POSTGRES_DB: db1
+        ports:
+            - '5432:5432'
+        volumes:
+            - '/opt/psql-data/pp:/var/lib/postgresql/data'
+        container_name: db
+
+        # backend
+        backend:
+        build: ./backend/
+        ports:
+            - '8000:8000'
+
+        # env_file:
+        #   - fileName
+
+        restart: always
+        depends_on:
+            - db
+        container_name: backend
+
+        entrypoint:
+            ['./wait-for-it.sh', 'db:5432', '--', 'python', 'manage.py', 'runserver']`
+
+
+
+7. Create a Dockerfile for the project as shown below.
+
+        FROM python:3.9-slim
+
+        WORKDIR /backend
+
+        COPY . .
+
+        EXPOSE 8000
+
+        RUN chmod +x ./wait-for-it.sh
+
+        ENTRYPOINT [ "python", "manage.py", "runserver" ]
+
+
+9. Run the following command to start the container.
+
+`docker-compose up --build --force-recreate --remove-orphans --no-deps;`
+
+
