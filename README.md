@@ -244,4 +244,4 @@ Tellers have the ability to manage customers and also manage queues.
 
 `docker-compose up --build --force-recreate --remove-orphans --no-deps;`
 
-10. Access the application through the IP address or the link `http://ec2-51-20-75-48.eu-north-1.compute.amazonaws.com/`
+10. Access the application through the IP address or the link http://ec2-51-20-75-48.eu-north-1.compute.amazonaws.com/
